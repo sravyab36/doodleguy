@@ -9,7 +9,8 @@ function preload(){
     groundImg = loadImage('assets/ground.png')
     snowImg = loadImage('assets/snow_background.png')
     sunImg = loadImage('assets/sun_background.png')
-    spritesImg = loadImage('assets/sprites.png')
+    spritesRImg = loadImage('assets/spritesR.png')
+    spritesLImg = loadImage('assets/spritesL.png')
     nextImg = loadImage('assets/next.png')
 
 
@@ -17,7 +18,8 @@ function preload(){
         groundImg ,
         snowImg, 
         sunImg,
-        spritesImg,
+        spritesRImg,
+        spritesLImg,
         nextImg
     }
 

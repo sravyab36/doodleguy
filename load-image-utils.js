@@ -36,9 +36,13 @@
 //     return goombaImages
 // }
 
-const loadDoodlemanImages = (objectsImg) => {
-    const doodleManImages = Array.from({ length: 5}, (el, i) => {
-        return objectsImg.get(i * 180, 26, 180, 304)        
+const loadDoodlemanImages = ({right: rightImg, left: leftImg}) => {
+    const doodleManImages = Array.from({ length: 10}, (el, i) => {
+        if (i < 5) { 
+            return rightImg.get(i * 170, 26, 160, 304) 
+        } else {
+            return leftImg.get((i - 5) * 170, 26, 160, 304)
+        }
     })  
     return doodleManImages
 }

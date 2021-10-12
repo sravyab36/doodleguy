@@ -2,7 +2,7 @@ class Game {
     constructor(images, sounds){
         this.images = images
         // this.sounds = sounds
-        this.doodleManImages = loadDoodlemanImages(this.images.spritesImg)
+        this.doodleManImages = loadDoodlemanImages({right: this.images.spritesRImg, left: this.images.spritesLImg})
         // this.coinImages = loadCoinImages(this.images.objectsImg)
         // this.goombaImages = loadGoombaImages(this.images.goombaImg)
         // this.numCoins = gameSettings.numCoins
@@ -15,7 +15,7 @@ class Game {
         // })
         // this.goombas = null
         this.background = new Background(this.images)
-        this.state = "sun"
+        
         // this.scoreboard = new Scoreboard()
         this.startButton = createButton('Start')
         this.startButton.mousePressed(this.init)
@@ -29,8 +29,7 @@ class Game {
         if(!this.started){
             // this.coins = Array.from({ length: gameSettings.numCoins}, (el, i) => {
             //     return new Coin(this.coinImages, this.sounds.coinSound, { x: gameSettings.coinSize * i, y: gameSettings.coinLevel }, gameSettings.coinSize)
-            // })
-            this.state = "sun"
+            // }}
             this.hero = new Doodleman(this.doodleManImages, {x: gameSettings.heroStartX, y: gameSettings.heroStartY}, {sizeX: gameSettings.heroSizeX, sizeY: gameSettings.heroSizeY})
             // this.goombas = Array.from({length: this.numGoombas}, (el, i) => {
             //     return new Goomba(this.goombaImages, {x: gameSettings.goombaFirstX + (gameSettings.goombaMinSpace * (gameSettings.goombaRandomSpaceMult * Math.random()) * i), y: gameSettings.goombaStartY}, gameSettings.goombaSize)
@@ -90,15 +89,11 @@ class Game {
 
 
     render() {
-        this.background.render()
         // this.scoreboard.render()
-        // this.coins.forEach(coin => coin.render())
+        this.background.render()
         if(this.hero){
-             this.hero.render()
-        }
-        // if(this.goombas){
-        //     this.goombas.forEach(goomba => goomba.render())
-        // }
+            this.hero.render()
+       } 
         if(!this.started && !this.over){
             this.startScreen.render()
         }
@@ -110,12 +105,20 @@ class Game {
     update(){
         // game over state
         if(this.started && !this.over){
+            if (this.hero.x >= gameSettings.canvasWidth - 50) {
+                this.hero.moveMan = this.background.updateCounter(1) // later, make an array of next states! certain objects show up under specific states
+                if (this.hero.moveMan) {
+                    this.hero.x = 0
+                }
+            }
+
             this.hero.update()
             // this.goombas.forEach(goomba => goomba.update())
             // this.coins.forEach(coin => coin.update())
             // this.checkCollisions()
             this.checkForWin()
         }
+
     }
 }
 
