@@ -15,7 +15,7 @@ const gameSettings = {
     coinLevel : 100,           
     heroStartX : 200,
     heroStartY : 350,
-    overlayX: 250,
+    // overlayX: 250,
     overlayY: 50,
     overlayWidth: 500,
     overlayHeight: 300,

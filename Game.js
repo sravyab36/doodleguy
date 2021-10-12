@@ -19,7 +19,7 @@ class Game {
         // this.scoreboard = new Scoreboard()
         this.startButton = createButton('Start')
         this.startButton.mousePressed(this.init)
-        this.startScreen = new Overlay(`Welcome to Doodleman!`, 'Use arrow buttons to move', this.startButton)
+        this.startScreen = new Overlay(`Welcome to Doodle Man!`, 'Use arrow buttons to move.', this.startButton)
         this.gameOverScreen = new Overlay('Game over!', 'Start again?', this.startButton)
         // this.died = false 
     }

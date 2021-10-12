@@ -3,16 +3,19 @@ class Overlay{
         this.text1 = text1 
         this. text2  =text2
         this.startButton = startButton 
-        this.startButton.position(gameSettings.overlayX + 190, gameSettings.overlayY + 150)
+        this.x = gameSettings.canvasWidth/2 - gameSettings.overlayWidth/2
+        this.y = gameSettings.canvasHeight/2 - gameSettings.overlayHeight/2
+        this.startButton.position(gameSettings.canvasWidth/2 - 40, gameSettings.canvasHeight/2 + 60)
     }
     render(){
         strokeWeight(0)
         fill(gameSettings.overlayColor)
-        rect(gameSettings.overlayX, gameSettings.overlayY, gameSettings.overlayWidth, gameSettings.overlayHeight)
+        rect(this.x, this.y, gameSettings.overlayWidth, gameSettings.overlayHeight, 40)
         fill(0)
         stroke(0)
         textSize(gameSettings.textSize)
-        text(this.text1, gameSettings.overlayX + 130, gameSettings.overlayY + 50)
-        text(this.text2, gameSettings.overlayX + 80, gameSettings.overlayY + 100 )
+        textFont('Georgia');
+        text(this.text1, this.x + 90, this.y + 100)
+        text(this.text2, this.x + 80, this.y + 150)
     }
 }
