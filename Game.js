@@ -3,19 +3,14 @@ class Game {
         this.images = images
         // this.sounds = sounds
         this.doodleManImages = loadDoodlemanImages({right: this.images.spritesRImg, left: this.images.spritesLImg})
-        // this.coinImages = loadCoinImages(this.images.objectsImg)
-        // this.goombaImages = loadGoombaImages(this.images.goombaImg)
-        // this.numCoins = gameSettings.numCoins
-        // this.numGoombas = gameSettings.numGoombas
+        this.snowballImages = loadObstacleImages(this.images.snowballs)
+        this.tumbleweedImages = loadObstacleImages(this.images.tumbleweed)
+        this.snowballs = null
+        this.tumbleweed = null
         this.started = false
         this.over = false
-        this.hero = new Doodleman(this.doodleManImages, {x: gameSettings.heroStartX, y: gameSettings.heroStartY}, {sizeX: gameSettings.heroSizeX, sizeY: gameSettings.heroSizeY} )
-        // this.coins = Array.from({ length: gameSettings.numCoins}, (el, i) => {
-        //     return new Coin(this.coinImages, this.sounds.coinSound, { x: gameSettings.coinSize * i, y: gameSettings.coinLevel }, gameSettings.coinSize)
-        // })
-        // this.goombas = null
+        this.hero = null
         this.background = new Background(this.images)
-        
         // this.scoreboard = new Scoreboard()
         this.startButton = createButton('Start')
         this.startButton.mousePressed(this.init)
@@ -27,62 +22,52 @@ class Game {
     init = () => {
         console.log("reached init")
         if(!this.started){
-            // this.coins = Array.from({ length: gameSettings.numCoins}, (el, i) => {
-            //     return new Coin(this.coinImages, this.sounds.coinSound, { x: gameSettings.coinSize * i, y: gameSettings.coinLevel }, gameSettings.coinSize)
-            // }}
             this.hero = new Doodleman(this.doodleManImages, {x: gameSettings.heroStartX, y: gameSettings.heroStartY}, {sizeX: gameSettings.heroSizeX, sizeY: gameSettings.heroSizeY})
-            // this.goombas = Array.from({length: this.numGoombas}, (el, i) => {
-            //     return new Goomba(this.goombaImages, {x: gameSettings.goombaFirstX + (gameSettings.goombaMinSpace * (gameSettings.goombaRandomSpaceMult * Math.random()) * i), y: gameSettings.goombaStartY}, gameSettings.goombaSize)
-            // })
+            this.snowballs = Array.from({length: gameSettings.numObstacles}, (el, i) => {
+                return new Obstacle(this.snowballImages, i, this.background, 1, {x: gameSettings.canvasWidth + (gameSettings.obstacleMinSpace * (gameSettings.obstacleRandomSpaceMult * Math.random()) * i), y: gameSettings.heroStartY + 40}, gameSettings.obstacleSize)
+            })
+            this.tumbleweed = Array.from({length: gameSettings.numObstacles}, (el, i) => {
+                return new Obstacle(this.tumbleweedImages, i, this.background, 0, {x: gameSettings.canvasWidth + (gameSettings.obstacleMinSpace * (gameSettings.obstacleRandomSpaceMult * Math.random()) * i), y: gameSettings.heroStartY + 40}, gameSettings.obstacleSize)
+            }) 
             this.started = true
             this.over= false
+            // this.background = new Background(this.images)
             // this.died = false
             this.startButton.hide()
             // this.sounds.themeSong.play()
         }
     }
 
-    // checkCollisions(){
-    //     this.coins.forEach((coin, idx) => {
-    //         if(!coin.collected){
-    //             if(checkCoinCollision(this.hero, coin)){
-    //                 this.hero.score ++
-    //                 this.scoreboard.update(this.hero.score)
-    //                 coin.collected = true
-    //                 coin.playSound()
-    //                 // set coin to collected
-    //                 //play the coin sound 
-    //             }
-    //         }
-    //     })
+    checkCollisions(){
+        this.snowballs.forEach((sb) => {
+            if(!sb.disabled){
+                if(checkObstacleCollision(this.hero, sb)){
+                    this.hero.dead = true
+                    this.over = true
+                    this.started = false
+                    // this.sounds.themeSong.stop()
+                    // this.sounds.dieSound.play()
+                }
+            }
+        })
 
-    //     this.goombas.forEach((goomba) => {
-    //         if(!goomba.disabled){
-    //             if(checkGoombaCollision(this.hero, goomba)){
-    //                 if(checkHeroWins(this.hero)){
-    //                     goomba.die()
-    //                 } else {
-    //                     if(!this.died){
-    //                         this.sounds.themeSong.stop()
-    //                         this.sounds.dieSound.play()
-    //                         this.over = true
-    //                         this.started = false
-    //                         this.startButton.show()
-                     
-    //                         this.died = true
-    //                     }
-
-    //                 }
-    //             }
-    //         }
-    //     })
-    // }
+        this.tumbleweed.forEach((tw) => {
+            if(!tw.disabled){
+                if(checkObstacleCollision(this.hero, tw)){
+                    this.hero.dead = true
+                    this.over = true
+                    this.started = false
+                    // this.sounds.themeSong.stop()
+                    // this.sounds.dieSound.play()
+                }
+            }
+        })
+    }
 
     checkForWin() {
-        if (this.background.display == "snow") {
+        if (this.background.imageCounter == this.background.backgrounds.length) {
             this.over = true
             this.started = false
-            this.startButton = show()
         }
     }
 
@@ -93,12 +78,15 @@ class Game {
         this.background.render()
         if(this.hero){
             this.hero.render()
+            this.snowballs.forEach(sb => sb.render())
+            this.tumbleweed.forEach(tw => tw.render())
        } 
         if(!this.started && !this.over){
             this.startScreen.render()
         }
         if(this.over){
             this.gameOverScreen.render()
+            this.startButton.show()
         }
     }
 
@@ -113,9 +101,9 @@ class Game {
             }
 
             this.hero.update()
-            // this.goombas.forEach(goomba => goomba.update())
-            // this.coins.forEach(coin => coin.update())
-            // this.checkCollisions()
+            this.snowballs.forEach(sb => sb.update())
+            this.tumbleweed.forEach(tw => tw.update())
+            this.checkCollisions()
             this.checkForWin()
         }
 

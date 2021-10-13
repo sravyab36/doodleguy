@@ -10,3 +10,11 @@ const loadDoodlemanImages = ({right: rightImg, left: leftImg}) => {
     return doodleManImages
 }
 
+const loadObstacleImages = (obstacleImg ) => {
+    const obstacleImages = Array.from({ length: 9 }, (el, i) => {
+        return obstacleImg.get(0, i * 167, 167, 167)
+    })
+
+    return obstacleImages
+    
+}

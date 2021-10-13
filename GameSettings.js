@@ -2,8 +2,6 @@
 const gameSettings = { 
     canvasWidth : 885, 
     canvasHeight : 550, 
-    // numCoins : 100,
-    // numGoombas: 6,
     skyColor : [95, 138, 245], 
     groundColor :  [110, 59, 21], 
     overlayColor: [200, 200, 200, 225],
@@ -22,9 +20,8 @@ const gameSettings = {
     heroSizeX : 100, 
     heroSizeY : 150,
     textSize: 30,
-    // goombaSize: 80,
-    // goombaFirstX : 600,
-    // goombaStartY: 330,
-    // goombaMinSpace: 40,
-    // goombaRandomSpaceMult: 40,
+    numObstacles: 5,
+    obstacleSize: 100,
+    obstacleMinSpace: 40,
+    obstacleRandomSpaceMult: 40,
 }

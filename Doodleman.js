@@ -17,7 +17,7 @@ class Doodleman {
         this.jumping = false
         this.jumpValue = 0
         this.jumpInterval = null
-        this.moveMan = false
+        this.dead = false
         // this.jumpSound = jumpSound
         // this.boundingbox = new BoundingBox(this.x, this.y, this.size)
         this.score = 0
@@ -40,8 +40,7 @@ class Doodleman {
 
     jump(){
         console.log('hi there')
-        
-        if(!this.jumping){
+        if(!this.jumping && !this.dead){
             // this.jumpSound.play()
             this.jumpInterval = setInterval(this.animateJump, 20)
             setTimeout(this.clearJump, 500)
@@ -80,22 +79,25 @@ class Doodleman {
         //   } else {
         //     image(this.images[this.imageCounter], this.x, this.y, this.size, this.size)
         //   }
-        // console.log(this.images[this.imageCounter])
-        
-        // console.log("Counter:", this.imageCounter)
+    
+        // if hero is dead, set certain images
         image(this.images[this.imageCounter], this.x, this.y, this.sizeX, this.sizeY)
     }
 
     runRight(){
-        this.direction = 1
-        this.move()
-        this.nextImage(1, 3)
+        if (!this.dead) {
+            this.direction = 1
+            this.move()
+            this.nextImage(1, 3)
+        }
     }
 
     runLeft(){
-        this.direction = -1
-        this.move()
-        this.nextImage(5, 8)
+        if (!this.dead) {
+            this.direction = -1
+            this.move()
+            this.nextImage(5, 8)
+        }
     }
 
     towardsRest(){
