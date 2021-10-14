@@ -1,7 +1,7 @@
 class Overlay{
     constructor(text1, text2, startButton){
         this.text1 = text1 
-        this. text2  =text2
+        this.text2  =text2
         this.startButton = startButton 
         this.x = gameSettings.canvasWidth/2 - gameSettings.overlayWidth/2
         this.y = gameSettings.canvasHeight/2 - gameSettings.overlayHeight/2

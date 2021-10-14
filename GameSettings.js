@@ -11,7 +11,7 @@ const gameSettings = {
     groundLevel : 400,      
     coinSize : 60, 
     coinLevel : 100,           
-    heroStartX : 200,
+    heroStartX : 25,
     heroStartY : 350,
     // overlayX: 250,
     overlayY: 50,
@@ -21,7 +21,7 @@ const gameSettings = {
     heroSizeY : 150,
     textSize: 30,
     numObstacles: 5,
-    obstacleSize: 100,
-    obstacleMinSpace: 40,
+    obstacleSize: 85,
+    obstacleMinSpace: 300,
     obstacleRandomSpaceMult: 40,
 }

@@ -1,10 +1,10 @@
 class Background{
 
     constructor(images) {
-        this.backgrounds = [images.desertImg1, images.desertImg2, images.snowImg1, images.snowImg2, images.spaceImg1, images.spaceImg2]
+        this.backgrounds = [images.desertImg1, images.desertImg2, images.snowImg1, images.snowImg2, images.spaceImg1, images.spaceImg2, images.congratsImg1, images.congratsImg2]
         console.log("state", this.backgrounds)
-        this.grounds = [images.groundImg, images.groundImg, images.groundImg]
-        this.signs = [images.nextImg, images.nextImg, images.nextImg]
+        this.grounds = [images.groundImg, images.groundImg, images.groundImg, images.groundImg]
+        this.signs = [images.nextImg, images.nextImg, images.nextImg, images.congratsSignImg]
         console.log(this.images)
         this.stateCounter = 0
         this.animCounter = 0
@@ -30,21 +30,14 @@ class Background{
     }
 
     render(){
-        // background(gameSettings.skyColor)
-        // // this is the ground
-        // fill(gameSettings.groundColor)
-        // rect(0, gameSettings.groundLevel, gameSettings.canvasWidth, gameSettings.canvasHeight - gameSettings.groundLevel)
-        // if (game.state === "sun") {
-        //     image(this.images[0], 0, 0)
-        // } else if (game.state === "snow") {
-        //     image(this.images[1], 0, 0)
-        // }
-
         image(this.backgrounds[(this.stateCounter * 2) + this.animCounter], 0, 0, gameSettings.canvasWidth, gameSettings.canvasHeight)
-
-        // console.log(this.images.groundImg)
         image(this.grounds[this.stateCounter], 0, gameSettings.canvasHeight - this.grounds[this.stateCounter].height + 75)
-        image(this.signs[this.stateCounter], gameSettings.canvasWidth - 150, gameSettings.heroStartY, 125, 125)
+        if (this.stateCounter == this.backgrounds.length/2  - 1) {
+            image(this.signs[this.stateCounter], gameSettings.canvasWidth - 375, gameSettings.heroStartY + 10, 260, 125)
+        } else {
+            image(this.signs[this.stateCounter], gameSettings.canvasWidth - 150, gameSettings.heroStartY, 125, 125)
+        }
+        
 
     }
 }

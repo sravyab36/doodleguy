@@ -8,7 +8,7 @@ class Doodleman {
         this.images = images
         this.imageCounter = 0
         this.direction = 1
-        this.accelerationX = 10
+        this.accelerationX = 5
         this.accelerationY = 1
         this.velocityX = 0
         this.velocityY = 0
@@ -39,15 +39,12 @@ class Doodleman {
     }
 
     jump(){
-        console.log('hi there')
         if(!this.jumping && !this.dead){
             // this.jumpSound.play()
             this.jumpInterval = setInterval(this.animateJump, 20)
             setTimeout(this.clearJump, 500)
             this.jumping = true
             this.jumpValue = -1
-        }else {
-            console.log('already jumping')
         }
     }
 
@@ -62,25 +59,11 @@ class Doodleman {
         } else if(this.imageCounter > end){
             this.imageCounter = start
         } else {
-            // this.imageCounter+=this.direction
             this.imageCounter+=1
-            // console.log("Counter 2: ", this.imageCounter)
         }
     }
 
     render(){
-        // this.boundingbox.update(this.x, this.y)
-        // this.boundingbox.render()
-        // if (this.direction < 0) {
-        //     push();
-        //     scale(-1, 1)
-        //     image(this.images[this.imageCounter], this.x, this.y, this.size, this.size)
-        //     pop();
-        //   } else {
-        //     image(this.images[this.imageCounter], this.x, this.y, this.size, this.size)
-        //   }
-    
-        // if hero is dead, set certain images
         image(this.images[this.imageCounter], this.x, this.y, this.sizeX, this.sizeY)
     }
 
@@ -103,6 +86,7 @@ class Doodleman {
     towardsRest(){
         if(this.velocityX > 0){
             this.velocityX -= this.drag
+            this.velocityX = max(this.velocityX, 0)
         }else{
             if(this.x > 500){
                 this.imageCounter = 0
@@ -125,9 +109,7 @@ class Doodleman {
             this.velocityX = 0
         }
         if(this.x > gameSettings.canvasWidth - 50){
-            // if changing background, move back to starting position
             this.x = gameSettings.canvasWidth - 50
-            // if (background.)
             this.velocityX = 0
         }
 
@@ -140,9 +122,12 @@ class Doodleman {
         }
     }
 
+    stop() {
+        this.velocityX = 0
+    }
+
 
     update(){
-        // console.log("updating")
         this.x += this.direction * this.velocityX
         this.y += this.jumpValue * this.velocityY 
         this.towardsRest()
